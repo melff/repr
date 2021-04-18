@@ -117,9 +117,29 @@ reg.finalizer(html_dependencies, function(deps) deps$clear(), onexit = TRUE)
 #' @export
 repr_text.htmlwidget <- function(obj, ...) 'HTML widgets cannot be represented in plain text (need html)'
 
+#' @importFrom htmltools htmlEscape
 #' @name repr_*.htmlwidget
 #' @export
-repr_html.htmlwidget <- embed_tags
+repr_html.htmlwidget <- function(obj, ...){
+    tags <- embed_tags(obj, ...)
+
+    if(getOption("htmlwidgets_in_iframe",TRUE)){
+	if_tmpl <- "
+<iframe srcdoc=\"%s\" width=\"%i\" height=\"%i\" seamless  style=\"border-style:none\">
+</iframe>
+"
+
+	escaped <- htmlEscape(tags, attribute = TRUE)
+	width <- getOption("repr_htmlwidget_width",960L)
+	height <- getOption("repr_htmlwidget_width",600L)
+
+	iframe <- sprintf(if_tmpl,escaped,as.integer(width),as.integer(height))
+
+	div_tmpl <- "<div>\n%s</div>"
+	sprintf(div_tmpl,iframe)
+    }
+    else tags
+}
 
 
 #' @aliases repr_*.shiny.tag
