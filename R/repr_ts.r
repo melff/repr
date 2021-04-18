@@ -24,14 +24,26 @@ repr_ts_generic <- function(obj, repr_func, wrap, ...) {
 	}
 }
 
-#' @name repr_*.ts
-#' @export
-repr_html.ts <- function(obj, ...) repr_ts_generic(obj, repr_html, '%s:<br>%s', ...)
+print_ts <- function(x){
+    fmtd <- .preformat.ts(x)
+    print(fmtd, quote=FALSE, right=TRUE)
+}
 
 #' @name repr_*.ts
 #' @export
-repr_latex.ts <- function(obj, ..., colspec = getOption('repr.matrix.latex.colspec'))
+repr_html.ts <- function(obj, ...){
+    if(getOption("repr_fancy",FALSE))
+	repr_ts_generic(obj, repr_html, '%s:<br>%s', ...)
+    else repr_html_pre(obj,FUN=print_ts)
+}
+
+#' @name repr_*.ts
+#' @export
+repr_latex.ts <- function(obj, ..., colspec = getOption('repr.matrix.latex.colspec')){
+    if(getOption("repr_fancy",FALSE))
 	repr_ts_generic(obj, repr_latex, '%s:\\\\%s', ..., colspec = colspec)
+    else repr_latex_pre(obj,FUN=print_ts)
+}
 
 #' @name repr_*.ts
 #' @export

@@ -209,7 +209,9 @@ repr_html.matrix <- function(
 	...,
 	rows = getOption('repr.matrix.max.rows'),
 	cols = getOption('repr.matrix.max.cols')
-) repr_matrix_generic(
+) {
+    if(getOption("repr_fancy",FALSE))
+	repr_matrix_generic(
 	obj,
 	'<table class="dataframe">\n<caption>%s</caption>\n%s%s</table>\n',
 	'<thead>\n%s</thead>\n', '\t<tr>%s</tr>\n', '<th></th>',
@@ -219,6 +221,8 @@ repr_html.matrix <- function(
 	escape_fun = html_escape_vec,
 	rows = rows, cols = cols,
 	...)
+    else repr_html_pre(obj)
+}
 
 #' @name repr_*.matrix/data.frame
 #' @export
@@ -239,6 +243,8 @@ repr_latex.matrix <- function(
 	cols = getOption('repr.matrix.max.cols'),
   colspec = getOption('repr.matrix.latex.colspec')
 ) {
+    if(getOption("repr_fancy",FALSE)){
+
 	cols_spec <- paste0(paste(rep(colspec$col, min(cols + 1L, ncol(obj))), collapse = ''), colspec$end)
 	if (has_row_names(obj)) {
 		row_head <- colspec$row_head
@@ -259,6 +265,8 @@ repr_latex.matrix <- function(
 	
 	#TODO: remove this quick’n’dirty post processing
 	gsub(' &\\', '\\', r, fixed = TRUE)
+    }
+    else repr_latex_pre(obj)
 }
 
 #' @name repr_*.matrix/data.frame

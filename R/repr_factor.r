@@ -15,7 +15,14 @@ repr_factor_generic <- function(template, repr_vec, repr_lvls = repr_vec)
 
 #' @name repr_*.factor
 #' @export
-repr_html.factor <- repr_factor_generic(
+repr_html.factor <- function(obj, ...){
+    if(getOption("repr_fancy",FALSE))
+	repr_html_factor(obj, ...)
+    else
+	repr_html_pre(obj)
+}
+
+repr_html_factor <- repr_factor_generic(
 # "display: list-item" because of https://github.com/jupyter/notebook/issues/2223
 '%s
 <details>
@@ -31,4 +38,11 @@ repr_markdown.factor <- repr_factor_generic('%s\n**Levels**: %s', repr_markdown.
 
 #' @name repr_*.factor
 #' @export
-repr_latex.factor <- repr_factor_generic('%s\n\\emph{Levels}: %s', repr_latex.character)
+repr_latex.factor <- function(obj, ...){
+    if(getOption("repr_fancy",FALSE))
+	repr_latex_factor(obj, ...)
+    else
+	repr_latex_pre(obj)
+}
+
+repr_latex_factor <- repr_factor_generic('%s\n\\emph{Levels}: %s', repr_latex.character)
