@@ -117,6 +117,10 @@ reg.finalizer(html_dependencies, function(deps) deps$clear(), onexit = TRUE)
 #' @export
 repr_text.htmlwidget <- function(obj, ...) 'HTML widgets cannot be represented in plain text (need html)'
 
+#' @export
+repr_latex.htmlwidget <- function(obj, ...) 'HTML widgets cannot be represented in plain text (need html)'
+
+
 #' @importFrom htmltools htmlEscape
 #' @name repr_*.htmlwidget
 #' @export

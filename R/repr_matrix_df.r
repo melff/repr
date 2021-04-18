@@ -243,6 +243,8 @@ repr_latex.matrix <- function(
 	cols = getOption('repr.matrix.max.cols'),
   colspec = getOption('repr.matrix.latex.colspec')
 ) {
+    if(getOption("repr_fancy",FALSE)){
+
 	cols_spec <- paste0(paste(rep(colspec$col, min(cols + 1L, ncol(obj))), collapse = ''), colspec$end)
 	if (has_row_names(obj)) {
 		row_head <- colspec$row_head
@@ -263,6 +265,8 @@ repr_latex.matrix <- function(
 	
 	#TODO: remove this quick’n’dirty post processing
 	gsub(' &\\', '\\', r, fixed = TRUE)
+    }
+    else repr_latex_pre(obj)
 }
 
 #' @name repr_*.matrix/data.frame

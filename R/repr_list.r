@@ -92,7 +92,8 @@ repr_markdown.list <- function(obj, ...) repr_list_generic(
 
 #' @name repr_*.list
 #' @export
-repr_latex.list <- function(obj, ...) repr_list_generic(
+repr_latex.list <- function(obj, ...) {
+    if(getOption("repr_fancy",FALSE))repr_list_generic(
 	obj, 'latex',
 	'\\item %s\n',
 	'\\item[\\$%s] %s\n',
@@ -101,3 +102,5 @@ repr_latex.list <- function(obj, ...) repr_list_generic(
 	named_wrap = '\\begin{description}\n%s\\end{description}\n',
 	numeric_item = '\\item[{[[%s]]}] %s\n',
 	escape_fun = latex_escape)
+    else repr_latex_pre(obj)
+}

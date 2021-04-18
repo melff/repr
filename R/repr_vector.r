@@ -177,18 +177,21 @@ repr_markdown.Date <- repr_markdown.logical
 
 #' @name repr_*.vector
 #' @export
-repr_latex.logical <- function(obj, ..., items = getOption('repr.vector.max.items')) repr_vector_generic(
-	latex_escape_names(obj),  # escape vector names, regardless of class
-	'\\item %s\n',
-	'\\item[%s] %s\n',
-	'\\textbf{%s:} %s',
-	enum_wrap  = '\\begin{enumerate*}\n%s\\end{enumerate*}\n',
-	named_wrap = '\\begin{description*}\n%s\\end{description*}\n',
-	only_named_item = '\\textbf{%s:} %s',
-	escape_fun = latex_escape,
-	items = items
-)
-
+repr_latex.logical <- function(obj, ..., items = getOption('repr.vector.max.items')){
+    if(getOption("repr_fancy",FALSE))
+	repr_vector_generic(
+	    latex_escape_names(obj),  # escape vector names, regardless of class
+	    '\\item %s\n',
+	    '\\item[%s] %s\n',
+	    '\\textbf{%s:} %s',
+	    enum_wrap  = '\\begin{enumerate*}\n%s\\end{enumerate*}\n',
+	    named_wrap = '\\begin{description*}\n%s\\end{description*}\n',
+	    only_named_item = '\\textbf{%s:} %s',
+	    escape_fun = latex_escape,
+	    items = items
+	)
+    else repr_latex_pre(obj)
+}
 #' @name repr_*.vector
 #' @export
 repr_latex.integer <- repr_latex.logical

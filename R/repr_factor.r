@@ -38,4 +38,11 @@ repr_markdown.factor <- repr_factor_generic('%s\n**Levels**: %s', repr_markdown.
 
 #' @name repr_*.factor
 #' @export
-repr_latex.factor <- repr_factor_generic('%s\n\\emph{Levels}: %s', repr_latex.character)
+repr_latex.factor <- function(obj, ...){
+    if(getOption("repr_fancy",FALSE))
+	repr_latex_factor(obj, ...)
+    else
+	repr_latex_pre(obj)
+}
+
+repr_latex_factor <- repr_factor_generic('%s\n\\emph{Levels}: %s', repr_latex.character)
