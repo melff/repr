@@ -15,7 +15,14 @@ repr_factor_generic <- function(template, repr_vec, repr_lvls = repr_vec)
 
 #' @name repr_*.factor
 #' @export
-repr_html.factor <- repr_factor_generic(
+repr_html.factor <- function(obj, ...){
+    if(getOption("repr_fancy",FALSE))
+	repr_html_factor(obj, ...)
+    else
+	repr_html_pre(obj)
+}
+
+repr_html_factor <- repr_factor_generic(
 # "display: list-item" because of https://github.com/jupyter/notebook/issues/2223
 '%s
 <details>

@@ -83,17 +83,22 @@ def_style <- '<style>
 </style>'
 
 
-repr_html_wrapper <- function(obj, individual_wrap, items, ...) repr_vector_generic(
-	obj,
-	'<li>%s</li>',
-	'<dt>%s</dt><dd>%s</dd>',
-	'<strong>%s:</strong> %s',
-	paste0(list_style, '<ol class=list-inline>%s</ol>\n'),
-	paste0(def_style, '<dl class=dl-inline>%s</dl>\n'),
-	escape_fun = html_escape,
-	individual_wrap = individual_wrap,
-	items = items
-)
+repr_html_wrapper <- function(obj, individual_wrap, items, ...){
+    if(getOption("repr_fancy",FALSE))
+	repr_vector_generic(
+	    obj,
+	    '<li>%s</li>',
+	    '<dt>%s</dt><dd>%s</dd>',
+	    '<strong>%s:</strong> %s',
+	    paste0(list_style, '<ol class=list-inline>%s</ol>\n'),
+	    paste0(def_style, '<dl class=dl-inline>%s</dl>\n'),
+	    escape_fun = html_escape,
+	    individual_wrap = individual_wrap,
+	    items = items
+	)
+    else repr_html_pre(obj)
+}
+    
 
 
 #' @name repr_*.vector

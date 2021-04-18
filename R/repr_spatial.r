@@ -10,7 +10,11 @@ NULL
 #' @export
 repr_geojson.geo_list <- function(obj, ...) unclass(obj)
 
-repr_geojson_via_geo_list <- function(obj, ...) repr_geojson(geojsonio::geojson_list(obj), ...)
+repr_geojson_via_geo_list <- function(obj, ...){
+    if(getOption("repr_fancy",FALSE))
+        repr_geojson(geojsonio::geojson_list(obj), ...)
+    else repr_html_pre(obj)
+}
 
 #' @name repr_geojson.*
 #' @export

@@ -61,7 +61,8 @@ repr_list_generic <- function(
 
 #' @name repr_*.list
 #' @export
-repr_html.list <- function(obj, ...) repr_list_generic(
+repr_html.list <- function(obj, ...) {
+    if(getOption("repr_fancy",FALSE))repr_list_generic(
 	obj, 'html',
 	'\t<li>%s</li>\n',
 	'\t<dt>$%s</dt>\n\t\t<dd>%s</dd>\n',
@@ -70,6 +71,8 @@ repr_html.list <- function(obj, ...) repr_list_generic(
 	'<dl>\n%s</dl>\n',
 	numeric_item = '\t<dt>[[%s]]</dt>\n\t\t<dd>%s</dd>\n',
 	escape_fun = html_escape)
+    else repr_html_pre(obj)
+}
 
 
 

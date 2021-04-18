@@ -209,7 +209,9 @@ repr_html.matrix <- function(
 	...,
 	rows = getOption('repr.matrix.max.rows'),
 	cols = getOption('repr.matrix.max.cols')
-) repr_matrix_generic(
+) {
+    if(getOption("repr_fancy",FALSE))
+	repr_matrix_generic(
 	obj,
 	'<table class="dataframe">\n<caption>%s</caption>\n%s%s</table>\n',
 	'<thead>\n%s</thead>\n', '\t<tr>%s</tr>\n', '<th></th>',
@@ -219,6 +221,8 @@ repr_html.matrix <- function(
 	escape_fun = html_escape_vec,
 	rows = rows, cols = cols,
 	...)
+    else repr_html_pre(obj)
+}
 
 #' @name repr_*.matrix/data.frame
 #' @export
