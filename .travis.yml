@@ -42,8 +42,8 @@ install:
 script:
 - R CMD build .
 - R CMD check repr*.tar.gz --as-cran
-- cat "/home/travis/build/IRkernel/repr/repr.Rcheck/00check.log"
-- cat "/home/travis/build/IRkernel/repr/repr.Rcheck/00install.out"
-- grep -q -R 'WARNING' "/home/travis/build/IRkernel/repr/repr.Rcheck/00check.log" ; [ $? -ne 0 ]
+# - cat "/home/travis/build/IRkernel/repr/repr.Rcheck/00check.log"
+# - cat "/home/travis/build/IRkernel/repr/repr.Rcheck/00install.out"
+# - grep -q -R 'WARNING' "/home/travis/build/IRkernel/repr/repr.Rcheck/00check.log" ; [ $? -ne 0 ]
 # geojsonio is hard to install so we can’t check it
 #- grep -q -R 'NOTE' "/home/travis/build/IRkernel/repr/repr.Rcheck/00check.log"; [ $? -ne 0 ]
